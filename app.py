@@ -78,6 +78,7 @@ def delete_entry(entry):
     """Delete an entry"""
     if input("Are you sure? y/N  ").lower() == 'y':
         entry.delete_instance()
+        print("Entry deleted!")
 
 
 
