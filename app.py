@@ -59,11 +59,14 @@ def view_entries(search_query=None):
         print('='*len(timestamp))
         print(entry.content)
         print('n) next entry')
+        print('d) delete entry')
         print('q) return to main menu')
 
-        next_action = input("Action: (N/q) ").lower().strip()
+        next_action = input("Action: (N/d/q) ").lower().strip()
         if next_action == 'q':
             break
+        elif next_action == 'd':
+            delete_entry(entry)
 
 
 def search_entries():
@@ -73,6 +76,9 @@ def search_entries():
 
 def delete_entry(entry):
     """Delete an entry"""
+    if input("Are you sure? y/N  ").lower() == 'y':
+        entry.delete_instance()
+
 
 
 menu = OrderedDict([
