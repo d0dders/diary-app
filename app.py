@@ -1,6 +1,7 @@
-
 from collections import OrderedDict
 import datetime
+import sys
+
 from peewee import *
 
 db = SqliteDatabase('diary.db')
@@ -37,10 +38,30 @@ def menu_loop():
 
 def add_entry():
     """Add an entry."""
+    print("Enter your entry. Press CTRL+D when finished.")
+    data = sys.stdin.read().strip()
+
+    if data:
+        if input('Save entry? (y/n)').lower() != 'n':
+            Entry.create(content=data)
+            print("Save succesful!")
 
 
 def view_entries():
     """View entries."""
+    entries = Entry.select().order_by(Entry.timestamp.desc())
+
+    for entry in entries:
+        timestamp = entry.timestamp.strftime('%A %B %d, %Y %I:%M%p')
+        print(timestamp)
+        print('='*len(timestamp))
+        print(entry.content)
+        print('n) next entry')
+        print('q) return to main menu')
+
+        next_action = input("Action: (N/q) ").lower().strip()
+        if next_action == 'q':
+            break
 
 
 def delete_entry(entry):
